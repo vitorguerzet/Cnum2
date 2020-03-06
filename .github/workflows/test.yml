@@ -1,0 +1,16 @@
+name: Scilab CI
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Install scilab
+      run: |
+        wget http://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz
+        tar xzvf scilab-6.1.0.bin.linux-x86_64.tar.gz
+    - name: Run tests
+      run: |
+        ./scilab-6.1.0/bin/scilab-cli -f test.sce
+        ./scilab-6.1.0/bin/scilab-cli -e 'result = exec("test.sce", "errcatch"); exit(result);'
